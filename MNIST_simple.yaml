@@ -1,0 +1,30 @@
+training:
+  max_epochs: 150                     # Number of epochs to train
+  batch_size: 64                     # Batch size for training
+  learning_rate: 0.001              # Learning rate for the optimizer
+  optimizer: "adam"                 # Optimizer type (e.g., adam, sgd)
+  weight_decay: 0.0001              # Weight decay for regularization
+  lr_scheduler: "cosine"            # cosine Step   0- learning rate schedulers
+
+data:
+  dataset: "MNIST"                  # Dataset name
+  data_dir: "./data"                # Directory for dataset
+  num_workers: 4                    # Number of workers for data loading
+  pin_memory: true                  # Whether to pin memory for faster data transfer to GPU
+
+model:
+  architecture: "SimpleNN"           # Model architecture (e.g., SimpleNN, CNN)
+  hidden_units: 128                 # Number of units in the hidden layers
+  output_classes: 10                # Number of output classes (for MNIST, it's 10)
+
+training_device:
+  accelerator: "gpu"                # Use GPU for training
+  devices: 1                        # Number of GPUs to use
+  precision: 32                     # Precision of training (16 for mixed precision, 32 for full precision)
+
+logger:
+  use_tensorboard: true             # Use TensorBoard for logging
+  log_dir: "logs"                   # Directory for TensorBoard logs
+
+evaluation:
+  evaluation_dir: "D:\\evaluation\\MNISTclassification"   # Directory to evaluation output
