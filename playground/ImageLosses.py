@@ -19,14 +19,14 @@ class ImageLosses:
         F_loss = self.alpha * (1 - pt) ** self.gamma * BCE_loss
         return F_loss.mean()
 
-    def label_smoothing(self, pred, target, smoothing=0.1):
-        n_class = pred.size(1)
-        true_dist = torch.zeros_like(pred)
-        true_dist.fill_(smoothing / (n_class - 1))
-        true_dist.scatter_(1, target.data.unsqueeze(1), 1 - smoothing)
-        return torch.mean(torch.sum(-true_dist * F.log_softmax(pred, dim=1), dim=1))
+    # def label_smoothing(self, pred, target, smoothing=0.1):
+    #     n_class = pred.size(1)
+    #     true_dist = torch.zeros_like(pred)
+    #     true_dist.fill_(smoothing / (n_class - 1))
+    #     true_dist.scatter_(1, target.data.unsqueeze(1), 1 - smoothing)
+    #     return torch.mean(torch.sum(-true_dist * F.log_softmax(pred, dim=1), dim=1))
 
-    # 2Regression / Reconstruction Losses
+    # 2 Regression / Reconstruction Losses
     def l1_loss(self, pred, target):
         return F.l1_loss(pred, target)
 
@@ -36,9 +36,9 @@ class ImageLosses:
     def huber_loss(self, pred, target, delta=1.0):
         return F.smooth_l1_loss(pred, target, beta=delta)
 
-    def perceptual_loss(self, vgg_features_pred, vgg_features_target):
-        """Example: L2 between features from a pretrained VGG"""
-        return F.mse_loss(vgg_features_pred, vgg_features_target)
+    # def perceptual_loss(self, vgg_features_pred, vgg_features_target):
+    #     """Example: L2 between features from a pretrained VGG"""
+    #     return F.mse_loss(vgg_features_pred, vgg_features_target)
 
     # 3️⃣ Segmentation / Similarity Losses
     def dice_loss(self, pred, target, eps=1e-6):

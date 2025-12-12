@@ -2,6 +2,8 @@ import torch
 from torch import nn
 import pytorch_lightning as pl
 
+from MODELS.ModelsGeneral import simple_lenet, lenet_batchnorm, lenet_batchnorm_dropout
+
 
 # Step 1: Define the LightningModule for MNIST classification
 class MNISTModel(pl.LightningModule):
@@ -22,15 +24,8 @@ class MNISTModel(pl.LightningModule):
         self.output_class = model_params['output_classes']
 
         # Define a simple fully connected neural network
-        self.model = nn.Sequential(
-            nn.Flatten(),
-            nn.Linear(28 * 28, 128),
-            nn.ReLU(),
-            nn.Linear(128, 64),
-            nn.ReLU(),
-            nn.Linear(64, self.output_class)
-        )
-        self.criterion = nn.CrossEntropyLoss()
+        self.model = lenet_batchnorm(self.output_class)
+        self.criterion = nn.CrossEntropyLoss(label_smoothing=0.01)
 
     def forward(self, x):
         return self.model(x)
@@ -68,8 +63,11 @@ class MNISTModel(pl.LightningModule):
             scheduler = torch.optim.lr_scheduler.StepLR(optim, step_size=10, gamma=0.1)
         elif self.lr_scheduler == 'cosine':
             scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optim, T_0=10, T_mult=2, eta_min=0.0005)
-        else:
+        elif self.lr_scheduler == 'exp':
             scheduler = torch.optim.lr_scheduler.ExponentialLR(optim, gamma=0.95)
+        else:
+            scheduler = None
+
 
         return [optim], [{'scheduler': scheduler, 'interval': 'epoch', 'frequency': 1}]
 

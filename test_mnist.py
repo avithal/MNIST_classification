@@ -5,14 +5,21 @@ import torch
 from numpy import ceil
 import matplotlib.pyplot as plt
 
-from MNISTModel import MNISTModel
-from MNISTDataModule import MNISTDataModule
-
+from MODELS.MNISTModel import MNISTModel
+from DATA.MNISTDataModule import MNISTDataModule
+from sklearn.metrics import confusion_matrix
+from utils import plot_confusion_matrix
 with open('MNIST_simple.yaml', 'r') as f:
     config = yaml.safe_load(f)
 
 
 def evaluate_and_find_misclassified_with_probs(model_path, loader):
+    """
+    evalute the mosel
+    :param model_path:
+    :param loader:
+    :return:
+    """
 
     # model_to_load = MNISTModel(config['model'])
     model_pl = MNISTModel(config['model'])
@@ -37,6 +44,8 @@ def evaluate_and_find_misclassified_with_probs(model_path, loader):
     model_le.eval()
     misclassified = []
     count = 0
+    pred_list = []
+    label_list= []
     with torch.no_grad():
         for images, labels in loader:
             count += 1
@@ -46,12 +55,28 @@ def evaluate_and_find_misclassified_with_probs(model_path, loader):
             for i in range(len(labels)):
                 if predicted[i] != labels[i]:
                     misclassified.append((images[i], labels[i].item(), predicted[i].item(), probabilities[i]))
+                pred_list.append(predicted[i])
+                label_list.append(labels[i])
+
+
+
+
+
+    cm = confusion_matrix(label_list, pred_list)
+    plot_confusion_matrix(cm)
 
     return misclassified
 
 
 # Visualize misclassified samples with prediction probabilities
 def visualize_misclassified_with_probs(misclassified, save_path, n=5):
+    """
+    save misclassifies dataset for observance
+    :param misclassified:
+    :param save_path:
+    :param n:
+    :return:
+    """
     num_subplots = int(ceil(len(misclassified)/5))
     for j in range(num_subplots):
         plt.figure(figsize=(15, 5))
@@ -83,6 +108,11 @@ def visualize_misclassified_with_probs(misclassified, save_path, n=5):
 
 
 def total_images_loader(loader):
+    """
+    to get the total images
+    :param loader:
+    :return:
+    """
     total_samples = len(loader) * loader.batch_size
     last_batch_size = len(list(loader)[-1][0])
     total_samples = total_samples - loader.batch_size + last_batch_size

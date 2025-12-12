@@ -1,5 +1,5 @@
-from MNISTModel import MNISTModel
-from MNISTDataModule import MNISTDataModule
+from MODELS.MNISTModel import MNISTModel
+from DATA.MNISTDataModule import MNISTDataModule
 import torch
 import pytorch_lightning as pl
 from pytorch_lightning.loggers import TensorBoardLogger
@@ -7,48 +7,16 @@ import yaml
 from pytorch_lightning.callbacks import ModelCheckpoint
 import gc
 from pytorch_lightning.profilers import PyTorchProfiler
-
+from utils import cleanup
 # TensorBoard logger saves logs under: tb_logs/mnist_model
-logger = TensorBoardLogger("tb_logs", name="mnist_model")
+logger = TensorBoardLogger("../tb_logs", name="mnist_model")
 # tensorboard  --logdir="D:\Avithal Study\MNIST_classification\tb_logs\mnist_model"
-
-
-def cleanup(trainer=None, model=None, datamodule=None, logger=None):
-    import gc, torch
-
-    # Close logger
-    if logger is not None:
-        try:
-            logger.experiment.flush()
-            logger.experiment.close()
-        except:
-            pass
-
-    # Clean Trainer workers
-    try:
-        if trainer is not None and trainer._data_connector:
-            trainer._data_connector.teardown()
-    except:
-        pass
-
-    # Delete major objects
-    del trainer
-    del model
-    del datamodule
-
-    # Python memory cleanup
-    gc.collect()
-
-    # CUDA cache cleanup
-    torch.cuda.empty_cache()
-
-    print("✔ Cleanup complete")
 
 
 if __name__ == '__main__':
 
     # Load hyperparameters from YAML configuration
-    with open('MNIST_simple.yaml', 'r') as f:
+    with open('../MNIST_simple.yaml', 'r') as f:
         config = yaml.safe_load(f)
 
     # Select GPU if available
@@ -106,7 +74,7 @@ if __name__ == '__main__':
     # Copy hyperparameters
     import shutil
     from pathlib import Path
-    config_path = Path("MNIST_simple.yaml")
+    config_path = Path("../MNIST_simple.yaml")
     target_dir = Path(logger.log_dir)
     shutil.copy(config_path, target_dir / "config.yaml")
 
