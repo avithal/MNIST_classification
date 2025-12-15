@@ -6,7 +6,7 @@ import pytorch_lightning as pl
 from pytorch_lightning.loggers import TensorBoardLogger
 from pytorch_lightning.callbacks import ModelCheckpoint
 
-from MODELS.MNISTModel import MNISTModel
+from MODELS.LeNetModel import MNISTModel
 from DATA.MNISTDataModule import MNISTDataModule
 from utils import cleanup
 

@@ -5,11 +5,11 @@ import torch
 from numpy import ceil
 import matplotlib.pyplot as plt
 
-from MODELS.MNISTModel import MNISTModel
+from MODELS.LeNetModel import MNISTModel
 from DATA.MNISTDataModule import MNISTDataModule
 from sklearn.metrics import confusion_matrix
 from utils import plot_confusion_matrix
-with open('MNIST_simple.yaml', 'r') as f:
+with open('../MNIST_simple.yaml', 'r') as f:
     config = yaml.safe_load(f)
 
 

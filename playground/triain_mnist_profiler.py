@@ -1,4 +1,4 @@
-from MODELS.MNISTModel import MNISTModel
+from MODELS.LeNetModel import MNISTModel
 from DATA.MNISTDataModule import MNISTDataModule
 import torch
 import pytorch_lightning as pl
