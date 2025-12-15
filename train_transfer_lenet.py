@@ -12,7 +12,7 @@ logger = TensorBoardLogger("tb_logs1", name="mnist_model")
 # tensorboard  --logdir="D:\Avithal Study\MNIST_classification\tb_logs\mnist_model"
 
 
-if __name__ =="__main__":
+if __name__ == "__main__":
     # Example dataloaders
     # Load and prepare MNIST dataset
     data_module = MNISTDataModule()
@@ -20,8 +20,6 @@ if __name__ =="__main__":
     data_module.setup_data()
     train_loader = data_module.train_dataloader()
     val_loader = data_module.val_dataloader()
-
-
     max_epochs = 25
     path_model = r'D:\Avithal Study\MNIST_classification\tb_logs1\mnist_model\version_1\checkpoint1\best_model-epoch=22-val_loss=0.0934.ckpt'
 

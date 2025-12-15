@@ -30,7 +30,7 @@ if __name__ == '__main__':
 
     # 1.Load and prepare MNIST dataset
     data_module = MNISTDataModule()
-    #data_module.prepare_data() # download data from MNIST
+    #  data_module.prepare_data() # download data from MNIST
     data_module.setup_data()
     train_loader = data_module.train_dataloader()
     val_loader = data_module.val_dataloader()
@@ -52,7 +52,8 @@ if __name__ == '__main__':
         verbose=True
     )
 
-    trainer = pl.Trainer(max_epochs=config['training']['max_epochs'], logger=logger, accelerator='gpu', callbacks=[checkpoint_callback], devices="auto")
+    trainer = pl.Trainer(max_epochs=config['training']['max_epochs'], logger=logger, accelerator='gpu',
+                         callbacks=[checkpoint_callback], devices="auto")
 
     # 4.Train the model
     # trainer.fit(model, train_loader,val_loader)

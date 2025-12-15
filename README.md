@@ -1,4 +1,4 @@
-# MNIST Training with PyTorch Lightning
+# MNIST Training with PyTorch Lightning and finding mislabelled data 
 
 End-to-end MNIST digit classification using **PyTorch Lightning**, including:
 - Baseline training
@@ -19,7 +19,7 @@ This repository provides a **modular and reproducible** framework for training n
 
 It is designed to demonstrate:
 - Best practices for ML project organization
-- Searching  labelled data after initial training
+- Searching  mislabeled  data after initial training
 - Lightning abstractions for training and evaluation
 - Transfer learning workflows
 - Hyperparameter optimization experiments

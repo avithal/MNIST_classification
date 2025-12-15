@@ -84,7 +84,7 @@ class MNISTDataModule(pl.LightningDataModule):
         return DataLoader(self.test_dataset, batch_size=self.batch_size)
 
     @staticmethod
-    def compute_stats( dataloader):
+    def compute_stats(dataloader):
 
         """
         Compute mean, std, and max pixel value of the training set.

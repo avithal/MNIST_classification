@@ -4,6 +4,7 @@ import pytorch_lightning as pl
 
 from MODELS.ModelsGeneral import lenet_batchnorm
 
+
 def clean_state_dict_for_sequential(state_dict):
     new_sd = {}
     for k, v in state_dict.items():
@@ -13,6 +14,7 @@ def clean_state_dict_for_sequential(state_dict):
             new_k = k
         new_sd[new_k] = v
     return new_sd
+
 
 class LeNetTransfer(pl.LightningModule):
     def __init__(self, pretrained_path: str, new_num_classes: int = 10, lr=1e-3):
@@ -57,6 +59,5 @@ class LeNetTransfer(pl.LightningModule):
         logits = self(x)
         loss = self.criterion(logits, y)
         acc = (logits.argmax(dim=1) == y).float().mean()
-
         self.log("val_loss", loss, prog_bar=True)
         self.log("val_acc", acc, prog_bar=True)

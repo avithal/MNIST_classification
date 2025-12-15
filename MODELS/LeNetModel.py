@@ -68,7 +68,6 @@ class MNISTModel(pl.LightningModule):
         else:
             scheduler = None
 
-
         return [optim], [{'scheduler': scheduler, 'interval': 'epoch', 'frequency': 1}]
 
     def on_train_epoch_end(self):

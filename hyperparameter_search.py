@@ -1,13 +1,11 @@
-import argparse
-import itertools
+import yaml
 import random
+import itertools
 
 import pytorch_lightning as pl
 from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.loggers import CSVLogger
 
-import torch
-import yaml
 from MODELS.LeNetModel import MNISTModel
 from DATA.MNISTDataModule import MNISTDataModule
 from utils import cleanup
@@ -123,6 +121,7 @@ def main(max_epochs=10,search_type = 'grid', num_trials = 10  ):
         if val_acc > best_score:
             best_score = val_acc
             best_config = hparams
+        cleanup()
 
     # -------------------------------------------------
     # Results
