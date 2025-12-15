@@ -41,6 +41,7 @@ The code is intentionally lightweight and easy to extend to other datasets or mo
 - ✅ Clean experiment tracking using tensorboard 
 - ✅ Easy to adapt beyond MNIST
 
+![Hyperparameter search console](playground/console_hyperparameter.jpg)
 
 
 ---
