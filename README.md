@@ -68,6 +68,6 @@ The code is intentionally lightweight and easy to extend to other datasets or mo
 │── train_mnist.py
 │── train_transfer_lenet.py
 │── hyperparameter_search.py
-│── MNIST_simple.yaml
+│── requirements.txt
 └── tests/
     └── test_mnist.py.py
